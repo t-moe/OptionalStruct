@@ -187,24 +187,24 @@ impl GenerateApplyFnVisitor {
         let acc_opt = self.acc_opt;
         quote! {
             impl #impl_generics #new_name #ty_generics {
-                fn build(self, mut t: #orig_name #ty_generics) -> #orig_name #ty_generics {
+                pub fn build(self, mut t: #orig_name #ty_generics) -> #orig_name #ty_generics {
                     self.apply_to(&mut t);
                     t
                 }
 
-                fn apply_to(self, t: &mut #orig_name #ty_generics) {
+                pub fn apply_to(self, t: &mut #orig_name #ty_generics) {
                     #acc_concrete
                 }
 
-                fn try_build(self) -> Result<#orig_name #ty_generics, Self> {
+                pub fn try_build(self) -> Result<#orig_name #ty_generics, Self> {
                     self.try_into()
                 }
 
-                fn apply_to_opt(self, t: &mut Self) {
+                pub fn apply_to_opt(self, t: &mut Self) {
                     #acc_opt
                 }
 
-                fn apply(mut self, t: Self) -> Self {
+                pub fn apply(mut self, t: Self) -> Self {
                     t.apply_to_opt(&mut self);
                     self
                 }
